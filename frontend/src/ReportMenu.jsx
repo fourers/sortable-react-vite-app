@@ -5,14 +5,19 @@ import Row from "react-bootstrap/Row";
 import { Pencil } from "react-bootstrap-icons";
 
 
-export function ReportMenu({reports, setCurrentReportId}) {
+export function ReportMenu({reports, setCurrentReportId, setIsEditMode}) {
     return <Row>
         <Col>
             {reports.map((report) => <>
                 <Card body className="p-0 mb-3" key={report.id}>
                     <Row>
                         <Col md="auto">
-                            <Button onClick={() => setCurrentReportId(report.id)}>
+                            <Button 
+                                onClick={() => {
+                                    setCurrentReportId(report.id);
+                                    setIsEditMode(true);
+                                }}
+                            >
                                 <Pencil />
                             </Button>
                         </Col>
@@ -20,11 +25,12 @@ export function ReportMenu({reports, setCurrentReportId}) {
                             {report.display_name}
                         </Col>
                         <Col className="d-flex align-items-center">
-                            {report.category}
+                            {"Report"}
                         </Col>
                     </Row>
                 </Card>
             </>)}
+            {reports.length <= 0 ? <p>{"No reports yet"}</p> : null}
         </Col>
     </Row>;
 }

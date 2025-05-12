@@ -1,17 +1,18 @@
 import "./App.css";
 
 import { useEffect, useState } from "react";
-import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
 
+import { AddButton } from "./AddButton";
 import { EditMode } from "./EditMode";
+import { Heading } from "./Heading";
 import { ReportMenu } from "./ReportMenu";
 
 
 function App() {
     const [reports, setReports] = useState([]);
     const [currentReportId, setCurrentReportId] = useState(null);
+    const [isEditMode, setIsEditMode] = useState(false);
 
     useEffect(() => {
         fetch("/api/reports")
@@ -31,10 +32,22 @@ function App() {
 
     return (
         <Container>
-            <Row className="pb-3">
-                <Col><h1>Sortable App</h1></Col>
-            </Row>
-            {currentReportId == null ? <ReportMenu reports={reports} setCurrentReportId={setCurrentReportId} /> : <EditMode currentReportId={currentReportId}/>}
+            <Heading />
+            {isEditMode ? null : <AddButton 
+                setCurrentReportId={setCurrentReportId} 
+                setIsEditMode={setIsEditMode}
+            />}
+            {isEditMode ? null: <ReportMenu
+                reports={reports}
+                setCurrentReportId={setCurrentReportId}
+                setIsEditMode={setIsEditMode}
+            />}
+            {isEditMode ? <EditMode
+                currentReportId={currentReportId}
+                setCurrentReportId={setCurrentReportId}
+                setIsEditMode={setIsEditMode}
+                setReports={setReports}
+            /> : null}
         </Container>
     );
 }
