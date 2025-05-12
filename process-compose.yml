@@ -1,0 +1,10 @@
+version: "0.5"
+
+processes:
+  backend:
+   command: flask run
+   working_dir: ./backend
+
+  frontend:
+    command: yarn run dev
+    working_dir: ./frontend
