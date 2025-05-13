@@ -3,10 +3,11 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import { Back, Save, Trash } from "react-bootstrap-icons";
+import { Back, Trash } from "react-bootstrap-icons";
 
 import { EditDropdown } from "./EditDropdown";
 import { EditSortable } from "./EditSortable";
+import { EditSubmit } from "./EditSubmit";
 
 
 export function EditMode({currentReportId, setCurrentReportId, setIsEditMode, setReports}) {
@@ -81,45 +82,6 @@ export function EditMode({currentReportId, setCurrentReportId, setIsEditMode, se
             });
     };
 
-    const onSubmit = () => {
-        if (selectedOptions.length <= 0) {
-            return;
-        }
-        const endpoint = currentReportId == null ? "/api/reports" : `/api/reports/${currentReportId}`;
-        fetch(endpoint, {
-            method: "POST",
-            body: JSON.stringify({
-                display_name: displayName,
-                selected_options: selectedOptions,
-            }),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Failed to fetch data");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                if (currentReportId == null) {
-                    setReports((prev) => [...prev, data]);
-                } else {
-                    setReports((prev) => {
-                        const copy = [...prev];
-                        (copy.find((report) => report.id === currentReportId) || {}).display_name = displayName;
-                        return copy;
-                    });
-                    setCurrentReportId(null);
-                }
-                setIsEditMode(false);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
-
     return (
         <>
             <Row className="mb-4">
@@ -164,18 +126,14 @@ export function EditMode({currentReportId, setCurrentReportId, setIsEditMode, se
                 reportOptionsMap={reportOptionsMap}
             /> : null}
             {selectedOptions.length > 0 ? <>
-                <Row className="text-start mt-2 mb-4">
-                    <Col>
-                        <Button
-                            variant="secondary"
-                            type="submit"
-                            onClick={onSubmit}
-                        >
-                            <Save className="me-2" />
-                            {"Save"}
-                        </Button>
-                    </Col>
-                </Row>
+                <EditSubmit
+                    selectedOptions={selectedOptions}
+                    displayName={displayName}
+                    currentReportId={currentReportId}
+                    setCurrentReportId={setCurrentReportId}
+                    setReports={setReports}
+                    setIsEditMode={setIsEditMode}
+                />
             </> : null}
         </>
     );
