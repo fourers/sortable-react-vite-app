@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 
 import { AddButton } from "./AddButton";
-import { EditMode } from "./EditMode";
+import { EditMode } from "./features/editor/components/EditMode";
 import { Heading } from "./Heading";
 import { ReportMenu } from "./ReportMenu";
 
