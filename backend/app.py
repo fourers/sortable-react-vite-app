@@ -48,3 +48,11 @@ def update_report(report_id):
     report.selected_options = json_body["selected_options"]
     db.session.commit()
     return jsonify(report.to_json())
+
+
+@app.route("/api/reports/<int:report_id>", methods=["DELETE"])
+def delete_report(report_id):
+    report = db.get_or_404(Report, report_id)
+    db.session.delete(report)
+    db.session.commit()
+    return jsonify(report.to_json())

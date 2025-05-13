@@ -41,6 +41,7 @@ function App() {
                 reports={reports}
                 setCurrentReportId={setCurrentReportId}
                 setIsEditMode={setIsEditMode}
+                setReports={setReports}
             />}
             {isEditMode ? <EditMode
                 currentReportId={currentReportId}
