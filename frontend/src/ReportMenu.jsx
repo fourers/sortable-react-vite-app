@@ -27,33 +27,35 @@ export function ReportMenu({reports, setCurrentReportId, setIsEditMode, setRepor
     };
     return <Row>
         <Col>
-            {reports.map((report) => <>
-                <Card body className="p-0 mb-3" key={report.id}>
-                    <Row>
-                        <Col md="auto">
-                            <Button 
-                                onClick={onEdit(report.id)}
-                            >
-                                <Pencil />
-                            </Button>
-                        </Col>
-                        <Col className="d-flex align-items-center border-end">
-                            {report.display_name}
-                        </Col>
-                        <Col className="d-flex align-items-center">
-                            {"Report"}
-                        </Col>
-                        <Col md="auto">
-                            <Button 
-                                variant="danger"
-                                onClick={onDelete(report.id)}
-                            >
-                                <Trash />
-                            </Button>
-                        </Col>
-                    </Row>
-                </Card>
-            </>)}
+            {reports.map((report) => (
+                <div key={report.id.toString()}>
+                    <Card body className="p-0 mb-3">
+                        <Row>
+                            <Col md="auto">
+                                <Button 
+                                    onClick={onEdit(report.id)}
+                                >
+                                    <Pencil />
+                                </Button>
+                            </Col>
+                            <Col className="d-flex align-items-center border-end">
+                                {report.display_name}
+                            </Col>
+                            <Col className="d-flex align-items-center">
+                                {"Report"}
+                            </Col>
+                            <Col md="auto">
+                                <Button 
+                                    variant="danger"
+                                    onClick={onDelete(report.id)}
+                                >
+                                    <Trash />
+                                </Button>
+                            </Col>
+                        </Row>
+                    </Card>
+                </div>
+            ))}
             {reports.length <= 0 ? <p>{"No reports yet"}</p> : null}
         </Col>
     </Row>;
