@@ -1,9 +1,9 @@
-import { useEffect, useMemo,useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import { Back } from "react-bootstrap-icons";
+import { Back, Save, Trash } from "react-bootstrap-icons";
 
 import { EditDropdown } from "./EditDropdown";
 import { EditSortable } from "./EditSortable";
@@ -64,6 +64,23 @@ export function EditMode({currentReportId, setCurrentReportId, setIsEditMode, se
         setIsEditMode(false);
     };
 
+    const onDelete = (reportId) => () => {
+        const endpoint = `/api/reports/${reportId}`;
+        fetch(endpoint, {
+            method: "DELETE",
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Failed to fetch data");
+                }
+                setReports((prev) => [...prev].filter((report) => report.id !== reportId));
+                setIsEditMode(false);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     const onSubmit = () => {
         if (selectedOptions.length <= 0) {
             return;
@@ -105,14 +122,22 @@ export function EditMode({currentReportId, setCurrentReportId, setIsEditMode, se
 
     return (
         <>
-            <Row className="text-start mb-3">
-                <Col>
+            <Row className="mb-4">
+                <Col className="text-start">
                     <Button
                         variant="secondary"
                         onClick={onBack}
                     >
                         <Back className="me-2" />
                         {"Back"}
+                    </Button>
+                </Col>
+                <Col className="text-end">
+                    <Button
+                        variant="danger"
+                        onClick={onDelete}
+                    >
+                        <Trash/>
                     </Button>
                 </Col>
             </Row>
@@ -139,13 +164,14 @@ export function EditMode({currentReportId, setCurrentReportId, setIsEditMode, se
                 reportOptionsMap={reportOptionsMap}
             /> : null}
             {selectedOptions.length > 0 ? <>
-                <Row className="text-start">
+                <Row className="text-start mt-2 mb-4">
                     <Col>
                         <Button
                             variant="secondary"
                             type="submit"
                             onClick={onSubmit}
                         >
+                            <Save className="me-2" />
                             {"Save"}
                         </Button>
                     </Col>

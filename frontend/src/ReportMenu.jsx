@@ -9,11 +9,11 @@ export function ReportMenu({reports, setCurrentReportId, setIsEditMode, setRepor
     const onEdit = (reportId) => () => {
         setCurrentReportId(reportId);
         setIsEditMode(true);
-    }
+    };
     const onDelete = (reportId) => () => {
         const endpoint = `/api/reports/${reportId}`;
         fetch(endpoint, {
-            method: "DELETE"
+            method: "DELETE",
         })
             .then((response) => {
                 if (!response.ok) {
