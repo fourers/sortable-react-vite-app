@@ -6,7 +6,12 @@ import Row from "react-bootstrap/Row";
 import { ReactSortable } from "react-sortablejs";
 
 
-export function EditSortable({selectedOptions, setSelectedOptions, reportOptionsMap}) {
+export function EditSortable({selectedOptions, setSelectedOptions, reportOptions}) {
+    const reportOptionsMap = reportOptions.reduce((acc, item) => {
+        acc[item.column] = item;
+        return acc;
+    }, {});
+
     return (
         <Row>
             <Col>

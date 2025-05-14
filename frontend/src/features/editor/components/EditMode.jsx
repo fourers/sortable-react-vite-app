@@ -15,10 +15,6 @@ export function EditMode({currentReportId, setCurrentReportId, setIsEditMode, se
     const [selectedOptions, setSelectedOptions] = useState([]);
     const [displayName, setDisplayName] = useState("");
 
-    const reportOptionsMap = useMemo(() => reportOptions.reduce((acc, item) => {
-        acc[item.column] = item;
-        return acc;
-    }, {}), [reportOptions]);
     const filteredReportOptions = useMemo(() => {
         const selectedOptionsByName = selectedOptions.map((option) => option.column);
         return reportOptions.filter((option) => !selectedOptionsByName.includes(option.column));
@@ -123,7 +119,7 @@ export function EditMode({currentReportId, setCurrentReportId, setIsEditMode, se
             {reportOptions.length > 0 && selectedOptions.length > 0 ? <EditSortable
                 selectedOptions={selectedOptions}
                 setSelectedOptions={setSelectedOptions}
-                reportOptionsMap={reportOptionsMap}
+                reportOptions={reportOptions}
             /> : null}
             {selectedOptions.length > 0 ? <>
                 <EditSubmit
