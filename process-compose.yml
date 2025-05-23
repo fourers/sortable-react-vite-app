@@ -2,7 +2,7 @@ version: "0.5"
 
 processes:
   backend:
-   command: flask run
+   command: fastapi dev main.py
    working_dir: ./backend
 
   frontend:

@@ -2,3 +2,4 @@ flask
 ruff
 sqlalchemy
 flask-sqlalchemy
+fastapi[standard]
