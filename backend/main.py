@@ -47,16 +47,21 @@ def get_report(report_id: int, session: SessionDep) -> Report:
     return report
 
 
+class SelectedOptionInput(BaseModel):
+    column: str
+    selected_name: str
+
+
 class ReportInput(BaseModel):
     display_name: str
-    selected_options: list[str]
+    selected_options: list[SelectedOptionInput]
 
 
 @app.post("/api/reports")
 def create_report(report_input: ReportInput, session: SessionDep) -> Report:
     report = Report(
         display_name=report_input.display_name,
-        selected_options=report_input.selected_options,
+        selected_options=[o.model_dump() for o in report_input.selected_options],
     )
     session.add(report)
     session.commit()
@@ -64,7 +69,7 @@ def create_report(report_input: ReportInput, session: SessionDep) -> Report:
     return report
 
 
-@app.post("/api/reports/{report_id}")
+@app.patch("/api/reports/{report_id}")
 def update_report(
     report_input: ReportInput, report_id: int, session: SessionDep
 ) -> Report:
@@ -72,7 +77,7 @@ def update_report(
     if not report:
         return HTTPException(status_code=404, detail="Report not found")
     report.display_name = report_input.display_name
-    report.selected_options = report_input.selected_options
+    report.selected_options = [o.model_dump() for o in report_input.selected_options]
     session.commit()
     session.refresh(report)
     return report

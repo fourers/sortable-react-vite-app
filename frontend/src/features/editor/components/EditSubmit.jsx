@@ -11,7 +11,7 @@ export function EditSubmit({selectedOptions, displayName, currentReportId, setCu
         }
         const endpoint = currentReportId == null ? "/api/reports" : `/api/reports/${currentReportId}`;
         fetch(endpoint, {
-            method: "POST",
+            method: currentReportId == null ? "POST" : "PATCH",
             body: JSON.stringify({
                 display_name: displayName,
                 selected_options: selectedOptions,
