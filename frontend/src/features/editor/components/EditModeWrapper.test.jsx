@@ -141,14 +141,14 @@ describe("EditModeWrapper", () => {
     });
 
     it("handles fetch errors gracefully", async () => {
-        fetchMock.mockResolvedValueOnce({
+        fetchMock.mockResolvedValue({
             ok: false,
             json: async () => [],
         });
 
         render(
             <EditModeWrapper
-                currentReportId={null}
+                currentReportId={100}
                 setCurrentReportId={setCurrentReportId}
                 setIsEditMode={setIsEditMode}
                 setReports={setReports}
@@ -157,8 +157,33 @@ describe("EditModeWrapper", () => {
 
         // Should not throw, just log error
         await waitFor(() => {
-            expect(screen.getByTestId("reportOptions").textContent).toBe("[]");
-            expect(screen.getByTestId("selectedOptions").textContent).toBe("[]");
+            expect(fetchMock).toBeCalledTimes(2); // 1 for options, 1 for report
         });
+        expect(screen.getByTestId("reportOptions").textContent).toBe("[]");
+        expect(screen.getByTestId("selectedOptions").textContent).toBe("[]");
+    });
+
+    it("handles delete error gracefully", async () => {
+        fetchMock.mockResolvedValue({
+            ok: false,
+            json: async () => [],
+        });
+        render(
+            <EditModeWrapper
+                currentReportId={100}
+                setCurrentReportId={setCurrentReportId}
+                setIsEditMode={setIsEditMode}
+                setReports={setReports}
+            />,
+        );
+        fireEvent.click(screen.getByText("Delete"));
+        await waitFor(() => {
+            expect(fetchMock).toBeCalledTimes(3); // 2 fetches for options and report, 1 for delete
+            expect(fetchMock).toHaveBeenCalledWith("/api/reports/100", {
+                method: "DELETE",
+            });
+        });
+        expect(setReports).not.toHaveBeenCalled();
+        expect(setIsEditMode).not.toHaveBeenCalled();
     });
 });

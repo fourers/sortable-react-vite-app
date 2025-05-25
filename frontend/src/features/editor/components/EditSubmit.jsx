@@ -32,7 +32,7 @@ export function EditSubmit({selectedOptions, displayName, currentReportId, setCu
                 } else {
                     setReports((prev) => {
                         const copy = [...prev];
-                        (copy.find((report) => report.id === currentReportId) || {}).display_name = displayName;
+                        copy.find((report) => report.id === currentReportId).display_name = displayName;
                         return copy;
                     });
                     setCurrentReportId(null);
