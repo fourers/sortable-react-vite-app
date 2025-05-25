@@ -53,8 +53,7 @@ describe("EditDropdown", () => {
         expect(setSelectedOptions).toHaveBeenCalled();
 
         const updater = setSelectedOptions.mock.calls[0][0];
-        const prev = [];
-        const result = updater(prev);
+        const result = updater([]);
         expect(result).toEqual([
             { column: "col1", selected_name: "Column 1" },
         ]);
