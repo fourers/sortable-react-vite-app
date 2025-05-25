@@ -10,7 +10,7 @@ from constants import REPORT_COLUMNS
 from models import Report
 
 connect_args = {"check_same_thread": False}
-engine = create_engine("sqlite:///instance/backend.db", connect_args=connect_args)
+engine = create_engine("sqlite:///backend.db", connect_args=connect_args)
 
 
 def get_session():

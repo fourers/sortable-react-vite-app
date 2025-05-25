@@ -1,6 +1,8 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { afterEach, vi } from "vitest";
 import "@testing-library/jest-dom";
+
+import { fireEvent,render, screen } from "@testing-library/react";
+import { afterEach, vi } from "vitest";
+
 import { EditMode } from "./EditMode";
 
 
