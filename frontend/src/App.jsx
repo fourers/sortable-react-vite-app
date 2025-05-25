@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 
 import { AddButton } from "./AddButton";
-import { EditMode } from "./features/editor/components/EditMode";
+import { EditModeWrapper } from "./features/editor/components/EditModeWrapper";
 import { Heading } from "./Heading";
 import { ReportMenu } from "./ReportMenu";
 
@@ -43,7 +43,7 @@ function App() {
                 setIsEditMode={setIsEditMode}
                 setReports={setReports}
             />}
-            {isEditMode ? <EditMode
+            {isEditMode ? <EditModeWrapper
                 currentReportId={currentReportId}
                 setCurrentReportId={setCurrentReportId}
                 setIsEditMode={setIsEditMode}

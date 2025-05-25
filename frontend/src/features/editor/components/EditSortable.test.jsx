@@ -1,11 +1,11 @@
 import "@testing-library/jest-dom";
 
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { act, useState } from "react";
 import { expect, vi } from "vitest";
 
 import { EditSortable } from "./EditSortable";
-import { act, useState } from "react";
 
 describe("EditSortable", () => {
     const selectedOptions = [
@@ -47,7 +47,7 @@ describe("EditSortable", () => {
             <TestWrapper
                 selectedOptions={selectedOptions}
                 reportOptions={reportOptions}
-            />
+            />,
         );
         const textField = screen.getByDisplayValue("Name 1");
         act(() => {
