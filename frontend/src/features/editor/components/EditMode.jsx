@@ -28,7 +28,7 @@ export function EditMode({currentReportId, setCurrentReportId, setIsEditMode, se
                         {"Back"}
                     </Button>
                 </Col>
-                <Col className="text-end">
+                {currentReportId !== null ? <Col className="text-end">
                     <Button
                         variant="danger"
                         onClick={onDelete}
@@ -36,7 +36,7 @@ export function EditMode({currentReportId, setCurrentReportId, setIsEditMode, se
                     >
                         <Trash/>
                     </Button>
-                </Col>
+                </Col> : null}
             </Row>
             <Row className="text-start mb-3">
                 <Form.Group className="mb-3">

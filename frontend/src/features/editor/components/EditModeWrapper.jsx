@@ -49,8 +49,8 @@ export function EditModeWrapper({currentReportId, setCurrentReportId, setIsEditM
         setIsEditMode(false);
     };
 
-    const onDelete = (reportId) => () => {
-        const endpoint = `/api/reports/${reportId}`;
+    const onDelete = () => {
+        const endpoint = `/api/reports/${currentReportId}`;
         fetch(endpoint, {
             method: "DELETE",
         })
@@ -58,7 +58,7 @@ export function EditModeWrapper({currentReportId, setCurrentReportId, setIsEditM
                 if (!response.ok) {
                     throw new Error("Failed to fetch data");
                 }
-                setReports((prev) => [...prev].filter((report) => report.id !== reportId));
+                setReports((prev) => [...prev].filter((report) => report.id !== currentReportId));
                 setIsEditMode(false);
             })
             .catch((err) => {

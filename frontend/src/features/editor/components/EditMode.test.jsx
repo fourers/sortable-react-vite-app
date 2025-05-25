@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 
 import { fireEvent,render, screen } from "@testing-library/react";
-import { afterEach, vi } from "vitest";
+import { afterEach, it, vi } from "vitest";
 
 import { EditMode } from "./EditMode";
 
@@ -19,7 +19,7 @@ describe("EditMode", () => {
     }));
 
     const baseProps = {
-        currentReportId: null,
+        currentReportId: 1234,
         setCurrentReportId: vi.fn(),
         setIsEditMode: vi.fn(),
         setReports: vi.fn(),
@@ -45,6 +45,13 @@ describe("EditMode", () => {
         render(<EditMode {...baseProps} />);
         expect(screen.getByText("Back")).toBeInTheDocument();
         expect(screen.getByLabelText("Delete Report")).toBeInTheDocument();
+    });
+
+    it("renders only Back button when currentReportId is null", () => {
+        const props = { ...baseProps, currentReportId: null };
+        render(<EditMode {...props} />);
+        expect(screen.getByText("Back")).toBeInTheDocument();
+        expect(screen.queryByLabelText("Delete Report")).not.toBeInTheDocument();
     });
 
     it("calls onBack when Back button is clicked", () => {

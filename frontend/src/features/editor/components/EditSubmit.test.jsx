@@ -14,11 +14,8 @@ describe("EditSubmit", () => {
     let fetchMock;
 
     beforeEach(() => {
-        fetchMock = vi.spyOn(globalThis, "fetch");
-    });
-
-    afterEach(() => {
         vi.resetAllMocks();
+        fetchMock = vi.spyOn(globalThis, "fetch");
     });
 
     it("does not submit if selectedOptions is empty", () => {
@@ -57,6 +54,7 @@ describe("EditSubmit", () => {
         });
 
         await waitFor(() => {
+            expect(fetchMock).toHaveBeenCalledTimes(1);
             expect(fetchMock).toHaveBeenCalledWith(
                 "/api/reports",
                 expect.objectContaining({
@@ -68,18 +66,18 @@ describe("EditSubmit", () => {
                     headers: { "Content-Type": "application/json" },
                 }),
             );
-            expect(setReports).toHaveBeenCalledWith(expect.any(Function));
-            const updater = setReports.mock.calls[0][0];
-            const result = updater([{ id: 0, display_name: "Initial Report" }]);
-            expect(result).toEqual(
-                expect.arrayContaining([
-                    expect.objectContaining({ id: 0, display_name: "Initial Report" }),
-                    expect.objectContaining({ id: 1, display_name: "Test Report" }),
-                ]),
-            );
-            expect(setCurrentReportId).not.toHaveBeenCalled();
-            expect(setIsEditMode).toHaveBeenCalledWith(false);
         });
+        expect(setReports).toHaveBeenCalledWith(expect.any(Function));
+        const updater = setReports.mock.calls[0][0];
+        const result = updater([{ id: 0, display_name: "Initial Report" }]);
+        expect(result).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({ id: 0, display_name: "Initial Report" }),
+                expect.objectContaining({ id: 1, display_name: "Test Report" }),
+            ]),
+        );
+        expect(setCurrentReportId).not.toHaveBeenCalled();
+        expect(setIsEditMode).toHaveBeenCalledWith(false);
     });
 
     it("submits update (PATCH) and updates reports", async () => {
@@ -101,6 +99,7 @@ describe("EditSubmit", () => {
         fireEvent.click(screen.getByText("Save"));
 
         await waitFor(() => {
+            expect(fetchMock).toHaveBeenCalledTimes(1);
             expect(fetchMock).toHaveBeenCalledWith(
                 "/api/reports/2",
                 expect.objectContaining({
@@ -112,18 +111,18 @@ describe("EditSubmit", () => {
                     headers: { "Content-Type": "application/json" },
                 }),
             );
-            expect(setReports).toHaveBeenCalledWith(expect.any(Function));
-            const updater = setReports.mock.calls[0][0];
-            const result = updater([{ id: 1, display_name: "Initial Report" }, { id: 2, display_name: "Old Report" }]);
-            expect(result).toEqual(
-                expect.arrayContaining([
-                    expect.objectContaining({ id: 1, display_name: "Initial Report" }),
-                    expect.objectContaining({ id: 2, display_name: "Updated Report" }),
-                ]),
-            );
-            expect(setCurrentReportId).toHaveBeenCalledWith(null);
-            expect(setIsEditMode).toHaveBeenCalledWith(false);
         });
+        expect(setReports).toHaveBeenCalledWith(expect.any(Function));
+        const updater = setReports.mock.calls[0][0];
+        const result = updater([{ id: 1, display_name: "Initial Report" }, { id: 2, display_name: "Old Report" }]);
+        expect(result).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({ id: 1, display_name: "Initial Report" }),
+                expect.objectContaining({ id: 2, display_name: "Updated Report" }),
+            ]),
+        );
+        expect(setCurrentReportId).toHaveBeenCalledWith(null);
+        expect(setIsEditMode).toHaveBeenCalledWith(false);
     });
 
     it("handles fetch error gracefully", async () => {
