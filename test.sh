@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# pushd backend > /dev/null
+pushd backend > /dev/null
 
-# ruff check --fix
-# ruff format
+pytest --cov=. --cov-report=term-missing
 
-# popd > /dev/null
+popd > /dev/null
 
 pushd frontend > /dev/null
 
-yarn run test
+yarn run test:coverage
 
 popd > /dev/null

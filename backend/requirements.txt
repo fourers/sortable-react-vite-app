@@ -2,3 +2,6 @@ ruff
 sqlalchemy
 fastapi[standard]
 sqlmodel
+pytest
+pytest-cov
+pytest-asyncio

@@ -43,7 +43,7 @@ def get_reports(session: SessionDep) -> list[Report]:
 def get_report(report_id: int, session: SessionDep) -> Report:
     report = session.get(Report, report_id)
     if not report:
-        return HTTPException(status_code=404, detail="Report not found")
+        raise HTTPException(status_code=404, detail="Report not found")
     return report
 
 
@@ -75,7 +75,7 @@ def update_report(
 ) -> Report:
     report = session.get(Report, report_id)
     if not report:
-        return HTTPException(status_code=404, detail="Report not found")
+        raise HTTPException(status_code=404, detail="Report not found")
     report.display_name = report_input.display_name
     report.selected_options = [o.model_dump() for o in report_input.selected_options]
     session.commit()
@@ -87,7 +87,7 @@ def update_report(
 def delete_report(report_id: int, session: SessionDep) -> Report:
     report = session.get(Report, report_id)
     if not report:
-        return HTTPException(status_code=404, detail="Report not found")
+        raise HTTPException(status_code=404, detail="Report not found")
     session.delete(report)
     session.commit()
     return report
