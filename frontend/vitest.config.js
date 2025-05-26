@@ -13,5 +13,6 @@ export default defineConfig({
                 "src/main.jsx",
             ],
         },
+        silent: "passed-only",
     },
 });
