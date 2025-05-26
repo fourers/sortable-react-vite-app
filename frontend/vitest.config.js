@@ -6,5 +6,11 @@ export default defineConfig({
     test: {
         environment: "jsdom",
         globals: true,
+        coverage: {
+            exclude: [
+                "src/tests/setup.js",
+                "**/*.config.js",
+            ],
+        },
     },
 });

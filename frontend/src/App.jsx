@@ -3,10 +3,9 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 
-import { AddButton } from "./AddButton";
-import { EditModeWrapper } from "./features/editor/components/EditModeWrapper";
-import { Heading } from "./Heading";
-import { ReportMenu } from "./ReportMenu";
+import { Heading } from "./components/Heading";
+import { EditModeWrapper } from "./pages/EditReport/EditModeWrapper";
+import { ReportMenu } from "./pages/ListReports/ReportMenu";
 
 
 function App() {
@@ -33,10 +32,6 @@ function App() {
     return (
         <Container>
             <Heading />
-            {isEditMode ? null : <AddButton 
-                setCurrentReportId={setCurrentReportId} 
-                setIsEditMode={setIsEditMode}
-            />}
             {isEditMode ? null: <ReportMenu
                 reports={reports}
                 setCurrentReportId={setCurrentReportId}
