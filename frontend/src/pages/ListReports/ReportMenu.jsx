@@ -41,6 +41,7 @@ export function ReportMenu({reports, setCurrentReportId, setIsEditMode, setRepor
                                 <Col md="auto">
                                     <Button 
                                         onClick={onEdit(report.id)}
+                                        aria-label="Edit Report"
                                     >
                                         <Pencil />
                                     </Button>
@@ -55,6 +56,7 @@ export function ReportMenu({reports, setCurrentReportId, setIsEditMode, setRepor
                                     <Button 
                                         variant="danger"
                                         onClick={onDelete(report.id)}
+                                        aria-label="Delete Report"
                                     >
                                         <Trash />
                                     </Button>

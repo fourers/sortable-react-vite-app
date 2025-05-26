@@ -32,12 +32,12 @@ function App() {
     return (
         <Container>
             <Heading />
-            {isEditMode ? null: <ReportMenu
+            {!isEditMode ? <ReportMenu
                 reports={reports}
                 setCurrentReportId={setCurrentReportId}
                 setIsEditMode={setIsEditMode}
                 setReports={setReports}
-            />}
+            /> : null}
             {isEditMode ? <EditModeWrapper
                 currentReportId={currentReportId}
                 setCurrentReportId={setCurrentReportId}
