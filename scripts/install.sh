@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-pushd backend > /dev/null
+pushd "${DEVBOX_PROJECT_ROOT}/backend" > /dev/null
 
 pip install -r requirements.txt
 
 popd > /dev/null
 
-pushd frontend > /dev/null
+pushd "${DEVBOX_PROJECT_ROOT}/frontend" > /dev/null
 
 yarn install
 

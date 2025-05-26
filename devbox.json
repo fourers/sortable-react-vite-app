@@ -13,13 +13,13 @@
     ],
     "scripts": {
       "install": [
-        "./install.sh"
+        "${DEVBOX_PROJECT_ROOT}/scripts/install.sh"
       ],
       "lint": [
-        "./lint.sh"
+        "${DEVBOX_PROJECT_ROOT}/scripts/lint.sh"
       ],
       "test": [
-        "./test.sh"
+        "${DEVBOX_PROJECT_ROOT}/scripts/test.sh"
       ]
     }
   }
