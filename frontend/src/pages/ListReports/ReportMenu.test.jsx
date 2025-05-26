@@ -1,7 +1,9 @@
-import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
+
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import React from "react";
 import { expect, vi } from "vitest";
+
 import { ReportMenu } from "./ReportMenu";
 
 
@@ -35,7 +37,7 @@ describe("ReportMenu", () => {
                 setCurrentReportId={vi.fn()}
                 setIsEditMode={vi.fn()}
                 setReports={vi.fn()}
-            />
+            />,
         );
         expect(screen.getByText("Add Report")).toBeInTheDocument();
         expect(screen.getByText("Report One")).toBeInTheDocument();
@@ -49,7 +51,7 @@ describe("ReportMenu", () => {
                 setCurrentReportId={vi.fn()}
                 setIsEditMode={vi.fn()}
                 setReports={vi.fn()}
-            />
+            />,
         );
         expect(screen.getByText("No reports yet")).toBeInTheDocument();
     });
@@ -63,7 +65,7 @@ describe("ReportMenu", () => {
                 setCurrentReportId={setCurrentReportId}
                 setIsEditMode={setIsEditMode}
                 setReports={vi.fn()}
-            />
+            />,
         );
         // There are two edit buttons (one per report)
         const editButtons = screen.getAllByLabelText("Edit Report");
@@ -84,7 +86,7 @@ describe("ReportMenu", () => {
                 setCurrentReportId={vi.fn()}
                 setIsEditMode={vi.fn()}
                 setReports={setReports}
-            />
+            />,
         );
         // There are two delete buttons (one per report), last column
         const deleteButtons = screen.getAllByLabelText("Delete Report");
@@ -111,7 +113,7 @@ describe("ReportMenu", () => {
                 setCurrentReportId={vi.fn()}
                 setIsEditMode={vi.fn()}
                 setReports={setReports}
-            />
+            />,
         );
         const deleteButtons = screen.getAllByLabelText("Delete Report");
         expect(deleteButtons).toHaveLength(2);

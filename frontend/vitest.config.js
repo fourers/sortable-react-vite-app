@@ -10,6 +10,7 @@ export default defineConfig({
             exclude: [
                 "src/tests/setup.js",
                 "**/*.config.js",
+                "src/main.jsx",
             ],
         },
     },

@@ -1,6 +1,8 @@
-import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
+
+import { fireEvent,render, screen } from "@testing-library/react";
 import { expect, vi } from "vitest";
+
 import { AddButton } from "./AddButton";
 
 describe("AddButton", () => {
@@ -16,7 +18,7 @@ describe("AddButton", () => {
             <AddButton
                 setCurrentReportId={setCurrentReportId}
                 setIsEditMode={setIsEditMode}
-            />
+            />,
         );
         fireEvent.click(screen.getByText("Add Report"));
         expect(setIsEditMode).toHaveBeenCalledTimes(1);
